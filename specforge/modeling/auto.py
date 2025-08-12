@@ -11,6 +11,7 @@ from transformers import (
     Llama4TextConfig,
     LlamaConfig,
     PretrainedConfig,
+    Qwen3Config,
     Qwen3MoeConfig,
     modeling_utils,
 )
@@ -19,6 +20,7 @@ from specforge.utils import default_torch_dtype
 
 from .draft.llama3_eagle import LlamaForCausalLMEagle3
 from .target.llama4 import Llama4ForCausalLM
+from .target.qwen3 import Qwen3ForCausalLM
 from .target.qwen3_moe import Qwen3MoeForCausalLM
 
 
@@ -29,7 +31,7 @@ class AutoEagle3DraftModel(AutoModelForCausalLMBase):
     }
 
     @classmethod
-    def from_config(cls, config: PretrainedConfig):
+    def from_config(cls, config: PretrainedConfig, **config_kwargs):
         """
         This class method takes a configuration object and create its model based on the
         _model_mapping class variable.
@@ -42,7 +44,7 @@ class AutoEagle3DraftModel(AutoModelForCausalLMBase):
         """
         # get the model class from the
         _model_cls = cls._model_mapping[type(config)]
-        return _model_cls(config)
+        return _model_cls(config, **config_kwargs)
 
     @classmethod
     def from_pretrained(
@@ -75,6 +77,7 @@ class AutoDistributedTargetModel(AutoModelForCausalLMBase):
     _model_mapping = {
         Llama4TextConfig: [Llama4ForCausalLM],
         Qwen3MoeConfig: [Qwen3MoeForCausalLM],
+        Qwen3Config: [Qwen3ForCausalLM],
     }
 
     @classmethod
