@@ -2,6 +2,8 @@ import argparse
 import hashlib
 import os
 
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+
 import torch
 import torch.distributed as dist
 import wandb
