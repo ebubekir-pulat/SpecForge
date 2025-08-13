@@ -14,6 +14,8 @@ from torch.distributed.fsdp import MixedPrecision, ShardingStrategy, StateDictTy
 from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
+torch.cuda.set_device(1)
+
 from specforge import (
     AutoDistributedTargetModel,
     AutoDraftModelConfig,
